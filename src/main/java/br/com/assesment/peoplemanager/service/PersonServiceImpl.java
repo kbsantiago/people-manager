@@ -5,23 +5,27 @@ import br.com.assesment.peoplemanager.repository.PersonRepository;
 import br.com.assesment.peoplemanager.service.interfaces.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.exact;
+import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.regex;
 
+@Service
 public class PersonServiceImpl implements PersonService {
 
     @Autowired
     private PersonRepository personRepository;
 
     @Override
-    public boolean isValid(Person person) {
+    public boolean checkForDuplicateData(Person person) {
         ExampleMatcher matcher = ExampleMatcher.matching()
                 .withIgnorePaths("id")
-                .withMatcher("document", exact());
+                .withMatcher("email", exact());
         Example<Person> example = Example.of(person, matcher);
-        return personRepository.exists(example);
+        boolean result = personRepository.equals(example);
+        return result;
     }
 
     @Override
@@ -35,8 +39,8 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public List<Person> getAll(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.Direction.ASC, "nome");
+    public List<Person> getAllPaginated(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.Direction.ASC, "name");
         List<Person> people = personRepository.findAll(pageable).getContent();
         return people;
     }

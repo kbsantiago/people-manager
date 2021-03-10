@@ -18,9 +18,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "person")
 public class Person {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue
     private long id;
     private String name;
     private String email;
@@ -29,4 +27,7 @@ public class Person {
     private String nationality;
     private String document;
 
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn( name = "address_id" )
+    private Address address;
 }

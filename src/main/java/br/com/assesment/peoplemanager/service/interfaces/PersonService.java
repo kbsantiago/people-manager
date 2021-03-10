@@ -5,9 +5,9 @@ import br.com.assesment.peoplemanager.domain.Person;
 import java.util.List;
 
 public interface PersonService {
-    boolean isValid(Person person);
+    boolean checkForDuplicateData(Person person);
     Person save(Person person);
     Person getById(Long id);
-    List<Person> getAll(int page, int size);
+    List<Person> getAllPaginated(int page, int size);
     void delete(long id);
 }

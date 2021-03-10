@@ -1,10 +1,10 @@
-package br.com.avaliacao.gestaopessoas;
+package br.com.assesment.peoplemanager;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class GestaoPessoasApplicationTests {
+class PeopleManagerApplicationTests {
 
     @Test
     void contextLoads() {
