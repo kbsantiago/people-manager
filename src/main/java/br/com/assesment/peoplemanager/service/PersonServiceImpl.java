@@ -17,7 +17,7 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public boolean checkForDuplicateData(Person person) {
-        return personRepository.findByDocument(person.getDocument());
+        return personRepository.existsByDocument(person.getDocument()) != null ? true : false;
     }
 
     @Override
