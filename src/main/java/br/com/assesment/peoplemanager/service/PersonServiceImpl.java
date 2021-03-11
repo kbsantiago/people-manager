@@ -9,9 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.exact;
-import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.regex;
-
 @Service
 public class PersonServiceImpl implements PersonService {
 
@@ -20,12 +17,7 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public boolean checkForDuplicateData(Person person) {
-        ExampleMatcher matcher = ExampleMatcher.matching()
-                .withIgnorePaths("id")
-                .withMatcher("email", exact());
-        Example<Person> example = Example.of(person, matcher);
-        boolean result = personRepository.equals(example);
-        return result;
+        return personRepository.findByDocument(person.getDocument());
     }
 
     @Override

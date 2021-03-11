@@ -18,15 +18,15 @@ services:
 
   # Spring-boot*****************************************
   springapi:
-    image: springapi:latest
+    image: peoplemanager:latest
     network_mode: bridge
-    container_name: springapi
+    container_name: peoplemanager
     expose:
       - 8080
     ports:
       - 8080:8080
     environment:
-        SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres?currentSchema=customers
+        SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres?currentSchema=people
     restart: unless-stopped
     depends_on:
       - postgres

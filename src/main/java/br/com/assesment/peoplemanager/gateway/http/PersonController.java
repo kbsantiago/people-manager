@@ -5,6 +5,7 @@ import br.com.assesment.peoplemanager.gateway.model.PersonDto;
 import br.com.assesment.peoplemanager.service.PersonServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class PersonController {
     @Autowired
     private final ModelMapper modelMapper;
 
-    @ApiOperation(value = "Return a pageable list of people")
+    @ApiOperation(value = "Return a pageable list of people", authorizations = { @Authorization(value="jwtToken") })
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<PersonDto>> getAllPersonPageable(@RequestParam int page, @RequestParam int size) {
         List<PersonDto> people = personService.getAllPaginated(page, size)
@@ -40,7 +41,7 @@ public class PersonController {
         return ResponseEntity.ok(people);
     }
 
-    @ApiOperation(value = "Return single person by id")
+    @ApiOperation(value = "Return single person by id", authorizations = { @Authorization(value="jwtToken") })
     @RequestMapping(method = RequestMethod.GET, path = "/{id}")
     public ResponseEntity<PersonDto> getPersonById(@PathVariable String id) {
         Person person = personService.getById(Long.parseLong(id));
@@ -50,7 +51,7 @@ public class PersonController {
         return ResponseEntity.status(HttpStatus.OK).body(modelMapper.map(person, PersonDto.class));
     }
 
-    @ApiOperation(value = "Add and return person")
+    @ApiOperation(value = "Add and return person", authorizations = { @Authorization(value="jwtToken") })
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<PersonDto> save(@RequestBody PersonDto personDto) {
         final Person person;
@@ -63,7 +64,7 @@ public class PersonController {
         return ResponseEntity.status(HttpStatus.OK).body(modelMapper.map(person, PersonDto.class));
     }
 
-    @ApiOperation(value = "Update and return person")
+    @ApiOperation(value = "Update and return person", authorizations = { @Authorization(value="jwtToken") })
     @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity<PersonDto> update(@RequestBody PersonDto personDto) {
         Person person = personService.getById(personDto.getId());
@@ -83,7 +84,7 @@ public class PersonController {
         }
     }
 
-    @ApiOperation(value = "Delete person by id")
+    @ApiOperation(value = "Delete person by id", authorizations = { @Authorization(value="jwtToken") })
     @RequestMapping(method = RequestMethod.DELETE, path = "/{id}")
     public ResponseEntity delete(@PathVariable Long id) {
         Person person = personService.getById(id);
