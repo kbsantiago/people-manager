@@ -17,8 +17,8 @@ services:
     restart: unless-stopped
 
   # Spring-boot*****************************************
-  springapi:
-    image: peoplemanager:latest
+  peoplemanagerapi:
+    image: peoplemanagerapi:latest
     network_mode: bridge
     container_name: peoplemanager
     expose:
